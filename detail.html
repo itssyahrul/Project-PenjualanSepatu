@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Sepatu - SoleSphere</title>
+  <meta name="description" content="Detail lengkap spesifikasi, ukuran yang tersedia, dan harga sepatu premium original di SoleSphere. Tambahkan produk ke keranjang belanja sekarang.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-stone-50 bg-grid-pattern text-slate-800 min-h-screen flex flex-col justify-between">
+
+  <!-- Navbar -->
+  <nav class="sticky top-0 z-40 w-full glass-nav border-b border-slate-100 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2 group shrink-0">
+          <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform duration-300">
+            <svg class="w-6 h-6 transform -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+          </div>
+          <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">Sole<span class="text-emerald-600">Sphere</span></span>
+        </a>
+
+        <!-- Desktop Navigation Menu -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="index.html" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Beranda</a>
+          <a href="products.html" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Katalog Sepatu</a>
+          <a href="products.html?category=Sport" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Sport</a>
+          <a href="products.html?category=Casual" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Casual</a>
+          <a href="products.html?category=Formal" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Formal</a>
+        </div>
+
+        <!-- Right Menu (Cart & Auth) -->
+        <div class="flex items-center gap-4">
+          <!-- Cart Icon -->
+          <a href="cart.html" class="relative p-2.5 bg-white border border-slate-200 hover:border-slate-350 text-slate-700 hover:text-emerald-600 rounded-xl transition-all shadow-sm" aria-label="Keranjang Belanja">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <span id="cart-badge" class="absolute -top-1.5 -right-1.5 bg-emerald-600 text-white font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden">0</span>
+          </a>
+
+          <!-- User Nav Section (Login status) -->
+          <div id="user-nav-section" class="flex items-center gap-3 border-l border-slate-200 pl-4"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Product Detail Section -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
+    
+    <!-- Back to Catalog link -->
+    <div class="mb-8">
+      <a href="products.html" class="inline-flex items-center gap-1 text-sm font-semibold text-slate-500 hover:text-emerald-700 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        Kembali ke Katalog Sepatu
+      </a>
+    </div>
+
+    <!-- Product Loader/Container -->
+    <div id="detail-container" class="grid grid-cols-1 lg:grid-cols-12 gap-12 bg-white border border-slate-100 rounded-[2rem] p-6 md:p-8 shadow-2xl relative overflow-hidden">
+      <!-- Loading placeholder -->
+      <div class="col-span-full py-16 text-center text-slate-500">
+        Memuat detail produk...
+      </div>
+    </div>
+
+    <!-- Similar Products Section -->
+    <section class="mt-16 border-t border-slate-150 pt-16">
+      <h2 class="text-2xl font-extrabold text-slate-900 mb-8">Rekomendasi Lainnya</h2>
+      <div id="similar-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <!-- Dynmaically loaded similar products -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-150 text-slate-600 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-xs text-center text-slate-500">&copy; 2026 SoleSphere. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products-data.js"></script>
+  <script src="js/main.js"></script>
+  
+  <script>
+    let selectedSize = null;
+    let purchaseQty = 1;
+    let activeProduct = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProductDetail();
+    });
+
+    function loadProductDetail() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+      const container = document.getElementById('detail-container');
+      
+      if (!container) return;
+
+      if (!productId) {
+        showErrorPage(container, 'ID Produk tidak disertakan.');
+        return;
+      }
+
+      const products = getProducts();
+      activeProduct = products.find(p => p.id === productId);
+
+      if (!activeProduct) {
+        showErrorPage(container, 'Produk tidak ditemukan atau telah dihapus oleh Admin.');
+        return;
+      }
+
+      const sizesHtml = activeProduct.sizes.map(size => `
+        <button onclick="selectSizeOption(this, ${size})" class="size-pill border border-slate-200 hover:border-emerald-500 bg-white hover:bg-emerald-50/50 text-slate-700 font-bold px-4 py-3 rounded-xl transition-all text-sm focus:outline-none shadow-sm">
+          ${size}
+        </button>
+      `).join('');
+
+      let stockBadgeHtml = '';
+      if (activeProduct.stock > 5) {
+        stockBadgeHtml = `<span class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-250 text-xs font-bold font-mono">Tersedia: ${activeProduct.stock} Pasang</span>`;
+      } else if (activeProduct.stock > 0) {
+        stockBadgeHtml = `<span class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-250 text-xs font-bold font-mono">Stok Terbatas: ${activeProduct.stock} Pasang</span>`;
+      } else {
+        stockBadgeHtml = `<span class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 border border-rose-250 text-xs font-bold font-mono">Stok Habis</span>`;
+      }
+
+      container.innerHTML = `
+        <!-- Image Area -->
+        <div class="lg:col-span-6 flex justify-center items-center">
+          <div class="relative w-full aspect-[4/3] sm:aspect-square md:aspect-[4/3] lg:aspect-square overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-inner">
+            <img src="${activeProduct.image}" alt="${activeProduct.name}" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-4 left-4 text-xs font-bold px-2.5 py-1 rounded bg-emerald-600/90 text-white uppercase tracking-wider shadow-md">${activeProduct.category}</span>
+          </div>
+        </div>
+
+        <!-- Spec Detail Area -->
+        <div class="lg:col-span-6 flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between gap-4 flex-wrap">
+              <span class="text-sm font-semibold text-slate-450 uppercase tracking-widest">${activeProduct.brand}</span>
+              ${stockBadgeHtml}
+            </div>
+            
+            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">${activeProduct.name}</h1>
+            <p class="text-2xl font-extrabold text-emerald-600">${formatRupiah(activeProduct.price)}</p>
+            
+            <hr class="border-slate-100">
+            
+            <p class="text-slate-655 text-sm leading-relaxed">${activeProduct.description}</p>
+          </div>
+
+          <!-- Interaction Box -->
+          <div class="space-y-5 pt-4 border-t border-slate-100">
+            <div class="space-y-3">
+              <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider flex justify-between">
+                <span>Pilih Ukuran Sepatu (EU)</span>
+                <span id="selected-size-text" class="text-emerald-600 font-extrabold"></span>
+              </h3>
+              <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                ${sizesHtml}
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 flex-wrap pt-2">
+              <div class="flex items-center border border-slate-200 rounded-xl overflow-hidden bg-white shrink-0">
+                <button onclick="updatePurchaseQty(-1)" class="px-4 py-3 hover:bg-slate-50 text-slate-500 hover:text-slate-800 transition-colors">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4"></path></svg>
+                </button>
+                <span id="purchase-qty-display" class="px-4 font-bold text-slate-800 text-base w-10 text-center">1</span>
+                <button onclick="updatePurchaseQty(1)" class="px-4 py-3 hover:bg-slate-50 text-slate-500 hover:text-slate-800 transition-colors">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                </button>
+              </div>
+
+              <button onclick="triggerAddToCart()" class="flex-grow py-3.5 font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] rounded-xl transition-all shadow-lg shadow-emerald-600/10 text-sm tracking-wide flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                Tambah ke Keranjang
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      loadSimilarProducts(activeProduct, products);
+    }
+
+    function selectSizeOption(element, size) {
+      document.querySelectorAll('.size-pill').forEach(pill => {
+        pill.classList.remove('bg-emerald-600', 'border-emerald-600', 'text-white');
+        pill.classList.add('bg-white', 'border-slate-200', 'text-slate-700');
+      });
+
+      element.classList.remove('bg-white', 'border-slate-200', 'text-slate-700');
+      element.classList.add('bg-emerald-600', 'border-emerald-600', 'text-white');
+      
+      selectedSize = size;
+      document.getElementById('selected-size-text').textContent = `Terpilih: ${size}`;
+    }
+
+    function updatePurchaseQty(delta) {
+      if (!activeProduct) return;
+
+      const newQty = purchaseQty + delta;
+      
+      if (newQty < 1) return;
+      if (newQty > activeProduct.stock) {
+        showToast(`Stok tidak mencukupi! Hanya tersedia ${activeProduct.stock} pasang.`, 'error');
+        return;
+      }
+
+      purchaseQty = newQty;
+      document.getElementById('purchase-qty-display').textContent = purchaseQty;
+    }
+
+    function triggerAddToCart() {
+      if (!activeProduct) return;
+
+      if (activeProduct.stock <= 0) {
+        showToast('Maaf, produk ini sedang habis.', 'error');
+        return;
+      }
+
+      if (!selectedSize) {
+        showToast('Pilih ukuran sepatu Anda terlebih dahulu!', 'error');
+        return;
+      }
+
+      const success = addToCart(activeProduct.id, selectedSize, purchaseQty);
+      if (success) {
+        purchaseQty = 1;
+        document.getElementById('purchase-qty-display').textContent = 1;
+      }
+    }
+
+    function loadSimilarProducts(currentProduct, allProducts) {
+      const grid = document.getElementById('similar-grid');
+      if (!grid) return;
+
+      const similar = allProducts.filter(p => p.category === currentProduct.category && p.id !== currentProduct.id).slice(0, 3);
+
+      if (similar.length === 0) {
+        grid.innerHTML = `<p class="col-span-full text-sm text-slate-500">Belum ada rekomendasi serupa.</p>`;
+        return;
+      }
+
+      let html = '';
+      similar.forEach(product => {
+        html += `
+          <div class="group bg-white border border-slate-100 rounded-2xl p-4 shadow flex flex-col justify-between hover:-translate-y-1 transition-all duration-300">
+            <div>
+              <img src="${product.image}" alt="${product.name}" class="w-full aspect-square object-cover rounded-xl mb-3">
+              <span class="text-xs font-semibold text-slate-450 uppercase tracking-wider">${product.brand}</span>
+              <h3 class="text-sm font-bold text-slate-800 mt-0.5 truncate group-hover:text-emerald-600 transition-colors">
+                <a href="detail.html?id=${product.id}">${product.name}</a>
+              </h3>
+            </div>
+            
+            <div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-2.5">
+              <span class="font-extrabold text-emerald-655 text-xs md:text-sm">${formatRupiah(product.price)}</span>
+              <a href="detail.html?id=${product.id}" class="text-[10px] font-bold text-slate-800 bg-slate-50 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-lg transition-all">
+                Detail
+              </a>
+            </div>
+          </div>
+        `;
+      });
+      grid.innerHTML = html;
+    }
+
+    function showErrorPage(container, message) {
+      container.innerHTML = `
+        <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+          <div class="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mb-4">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Terjadi Kesalahan</h3>
+          <p class="text-slate-500 text-xs mb-6 max-w-sm">${message}</p>
+          <a href="products.html" class="px-4 py-2 font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-all text-xs">Kembali ke Katalog</a>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - SoleSphere</title>
+  <meta name="description" content="Dashboard manajemen produk dan transaksi SoleSphere. Tambah, edit, hapus sepatu serta update status transaksi masuk secara realtime.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-stone-50 bg-grid-pattern text-slate-800 min-h-screen flex flex-col justify-between">
+
+  <!-- Navbar -->
+  <nav class="sticky top-0 z-40 w-full glass-nav border-b border-slate-100 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2 group shrink-0">
+          <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform duration-300">
+            <svg class="w-6 h-6 transform -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+          </div>
+          <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">Sole<span class="text-emerald-600">Sphere</span></span>
+        </a>
+
+        <!-- Desktop Navigation Menu -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="index.html" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Beranda</a>
+          <a href="products.html" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Katalog Sepatu</a>
+          <a href="admin.html" class="text-sm font-bold text-emerald-600 transition-colors">Admin Dashboard</a>
+        </div>
+
+        <!-- Right Menu (User Area) -->
+        <div class="flex items-center gap-4">
+          <!-- User Nav Section (Login status) -->
+          <div id="user-nav-section" class="flex items-center gap-3"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full space-y-10">
+    
+    <!-- Admin Header -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white border border-slate-100 rounded-3xl p-6 md:p-8 shadow-premium">
+      <div>
+        <span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-md uppercase tracking-wider">Dashboard Panel</span>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 mt-2">Manajer Toko SoleSphere</h1>
+        <p class="text-xs md:text-sm text-slate-500 mt-1">Simulasi CRUD Data Produk dan Laporan Transaksi via LocalStorage.</p>
+      </div>
+      <button onclick="openAddModal()" class="px-5 py-3 font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-all shadow-lg shadow-emerald-600/20 text-sm flex items-center gap-1.5 self-start sm:self-auto shrink-0">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+        Tambah Sepatu
+      </button>
+    </div>
+
+    <!-- Quick Stats Cards Grid -->
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <!-- Total Pendapatan -->
+      <div class="bg-white border border-slate-100 rounded-2xl p-6 shadow-premium relative overflow-hidden">
+        <div class="absolute -right-3 -bottom-3 w-16 h-16 text-emerald-500/10"><svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Simulasi Pendapatan</span>
+        <h3 id="stat-revenue" class="text-2xl font-extrabold text-slate-800 mt-2">Rp 0</h3>
+        <p class="text-[10px] text-emerald-650 mt-1 font-semibold">Excl. transaksi dibatalkan</p>
+      </div>
+
+      <!-- Total Pesanan -->
+      <div class="bg-white border border-slate-100 rounded-2xl p-6 shadow-premium relative overflow-hidden">
+        <div class="absolute -right-3 -bottom-3 w-16 h-16 text-emerald-500/10"><svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg></div>
+        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Transaksi</span>
+        <h3 id="stat-orders" class="text-2xl font-extrabold text-slate-800 mt-2">0</h3>
+        <p class="text-[10px] text-slate-405 mt-1 font-semibold">Checkout pembeli tersimpan</p>
+      </div>
+
+      <!-- Jumlah Produk -->
+      <div class="bg-white border border-slate-100 rounded-2xl p-6 shadow-premium relative overflow-hidden">
+        <div class="absolute -right-3 -bottom-3 w-16 h-16 text-emerald-500/10"><svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg></div>
+        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Varian Produk</span>
+        <h3 id="stat-products" class="text-2xl font-extrabold text-slate-800 mt-2">0</h3>
+        <p class="text-[10px] text-emerald-650 mt-1 font-semibold font-mono">Tersedia di e-database</p>
+      </div>
+    </section>
+
+    <!-- Main Section Tabular -->
+    <div class="grid grid-cols-1 gap-10">
+      
+      <!-- Panel 1: Produk Management -->
+      <section class="bg-white border border-slate-100 rounded-3xl p-6 md:p-8 shadow-premium space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+            Katalog Stok Sepatu (CRUD)
+          </h2>
+          <span class="text-xs text-slate-500">Total Stok Real-time</span>
+        </div>
+
+        <div class="overflow-x-auto rounded-xl border border-slate-150 bg-slate-50">
+          <table class="w-full text-left border-collapse min-w-[700px]">
+            <thead>
+              <tr class="bg-emerald-50 text-xs font-bold text-slate-650 uppercase tracking-wider border-b border-slate-150">
+                <th class="px-6 py-4">Sepatu / Merek</th>
+                <th class="px-6 py-4">Kategori</th>
+                <th class="px-6 py-4">Harga Satuan</th>
+                <th class="px-6 py-4 text-center">Stok</th>
+                <th class="px-6 py-4">Ukuran</th>
+                <th class="px-6 py-4 text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="admin-products-table" class="divide-y divide-slate-200">
+              <!-- Rendered dinamis dari admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Panel 2: Order Management -->
+      <section class="bg-white border border-slate-100 rounded-3xl p-6 md:p-8 shadow-premium space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+            Pesanan Masuk & Transaksi
+          </h2>
+          <span class="text-xs text-slate-500">Total Transaksi</span>
+        </div>
+
+        <div class="overflow-x-auto rounded-xl border border-slate-150 bg-slate-50">
+          <table class="w-full text-left border-collapse min-w-[800px]">
+            <thead>
+              <tr class="bg-emerald-50 text-xs font-bold text-slate-655 uppercase tracking-wider border-b border-slate-150">
+                <th class="px-6 py-4">ID Order</th>
+                <th class="px-6 py-4">Tanggal</th>
+                <th class="px-6 py-4">Nama / HP Pelanggan</th>
+                <th class="px-6 py-4">Item Belanja</th>
+                <th class="px-6 py-4">Total</th>
+                <th class="px-6 py-4 text-center">Status</th>
+              </tr>
+            </thead>
+            <tbody id="admin-orders-table" class="divide-y divide-slate-200">
+              <!-- Rendered dinamis dari admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Modal Tambah/Edit Produk -->
+  <div id="product-modal" class="fixed inset-0 z-50 items-center justify-center bg-slate-950/40 backdrop-blur-sm p-4 hidden">
+    <div class="bg-white w-full max-w-2xl rounded-3xl p-6 md:p-8 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto animate-fade-in-up">
+      <div class="flex justify-between items-center border-b border-slate-150 pb-4 mb-6">
+        <h3 id="modal-title" class="text-xl font-bold text-slate-900">Tambah Produk Sepatu</h3>
+        <button onclick="closeProductModal()" class="text-slate-400 hover:text-slate-700 transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <form id="product-form" class="space-y-5">
+        <input type="hidden" id="product-id">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- Nama Sepatu -->
+          <div class="space-y-2">
+            <label for="prod-name" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Nama Sepatu</label>
+            <input type="text" id="prod-name" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl text-slate-800 outline-none text-xs" placeholder="Nama Sepatu" required>
+          </div>
+
+          <!-- Merek/Brand -->
+          <div class="space-y-2">
+            <label for="prod-brand" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Merek (Brand)</label>
+            <input type="text" id="prod-brand" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl text-slate-800 outline-none text-xs" placeholder="Nike, Adidas, Puma, dll" required>
+          </div>
+
+          <!-- Harga -->
+          <div class="space-y-2">
+            <label for="prod-price" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Harga Sepatu (IDR)</label>
+            <input type="number" id="prod-price" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl text-slate-800 outline-none text-xs" placeholder="Contoh: 1500000" required>
+          </div>
+
+          <!-- Kategori -->
+          <div class="space-y-2">
+            <label for="prod-category" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Kategori</label>
+            <select id="prod-category" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl text-slate-800 outline-none text-xs cursor-pointer">
+              <option value="Sport">Sport</option>
+              <option value="Casual">Casual</option>
+              <option value="Formal">Formal</option>
+            </select>
+          </div>
+
+          <!-- Stok -->
+          <div class="space-y-2">
+            <label for="prod-stock" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Stok Tersedia</label>
+            <input type="number" id="prod-stock" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl text-slate-800 outline-none text-xs" placeholder="10" required>
+          </div>
+
+          <!-- Ukuran Sepatu -->
+          <div class="space-y-2">
+            <label for="prod-sizes" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Ukuran Sepatu (Pemisah Koma)</label>
+            <input type="text" id="prod-sizes" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl text-slate-800 outline-none text-xs" placeholder="Contoh: 39, 40, 41, 42, 43" required>
+          </div>
+        </div>
+
+        <!-- Image URL -->
+        <div class="space-y-2">
+          <label for="prod-image" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">URL Gambar Sepatu</label>
+          <input type="url" id="prod-image" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl text-slate-800 outline-none text-xs" placeholder="https://images.unsplash.com/... atau kosongkan untuk default">
+        </div>
+
+        <!-- Deskripsi Sepatu -->
+        <div class="space-y-2">
+          <label for="prod-description" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Deskripsi Lengkap Sepatu</label>
+          <textarea id="prod-description" rows="4" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-xl text-slate-800 outline-none text-xs resize-none" placeholder="Masukkan deskripsi produk sepatu..." required></textarea>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-150">
+          <button type="button" onclick="closeProductModal()" class="px-5 py-3 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-50 text-xs font-bold transition-all">Batal</button>
+          <button type="submit" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-lg shadow-emerald-600/20">Simpan Data</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-150 text-slate-500 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500">
+      <p>&copy; 2026 SoleSphere Admin. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products-data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Katalog Sepatu Premium - SoleSphere</title>
+  <meta name="description" content="Jelajahi koleksi lengkap sepatu premium original dari berbagai brand dunia terpopuler. Gunakan filter pencarian untuk menemukan ukuran dan harga yang cocok.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-stone-50 bg-grid-pattern text-slate-800 min-h-screen flex flex-col justify-between">
+
+  <!-- Navbar -->
+  <nav class="sticky top-0 z-40 w-full glass-nav border-b border-slate-100 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2 group shrink-0">
+          <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform duration-300">
+            <svg class="w-6 h-6 transform -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+          </div>
+          <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">Sole<span class="text-emerald-600">Sphere</span></span>
+        </a>
+
+        <!-- Desktop Navigation Menu -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="index.html" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Beranda</a>
+          <a href="products.html" class="text-sm font-bold text-emerald-600 transition-colors">Katalog Sepatu</a>
+          <a href="products.html?category=Sport" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Sport</a>
+          <a href="products.html?category=Casual" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Casual</a>
+          <a href="products.html?category=Formal" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Formal</a>
+        </div>
+
+        <!-- Right Menu (Cart & Auth) -->
+        <div class="flex items-center gap-4">
+          <!-- Cart Icon -->
+          <a href="cart.html" class="relative p-2.5 bg-white border border-slate-200 hover:border-slate-350 text-slate-700 hover:text-emerald-600 rounded-xl transition-all shadow-sm" aria-label="Keranjang Belanja">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <span id="cart-badge" class="absolute -top-1.5 -right-1.5 bg-emerald-600 text-white font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden">0</span>
+          </a>
+
+          <!-- User Nav Section (Login status) -->
+          <div id="user-nav-section" class="flex items-center gap-3 border-l border-slate-200 pl-4"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="py-12 bg-emerald-50/20 border-b border-slate-100 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left">
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900">Koleksi Sepatu Premium</h1>
+      <p class="text-slate-650 text-sm mt-2 max-w-xl">Cari dan pilih sepatu impian Anda dari koleksi terbaik yang kami sediakan.</p>
+    </div>
+  </header>
+
+  <!-- Catalog Content Section -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      
+      <!-- Sidebar Filter Panel -->
+      <aside class="space-y-6 lg:col-span-1">
+        <div class="bg-white border border-slate-100 rounded-3xl p-6 shadow-premium space-y-6 sticky top-28">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+            <h3 class="font-bold text-slate-900 text-lg flex items-center gap-2">
+              <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 8.293A1 1 0 013 7.586V4z"></path></svg>
+              Filter Pencarian
+            </h3>
+            <button onclick="resetFilters()" class="text-xs text-emerald-600 hover:text-emerald-700 font-semibold hover:underline">Reset</button>
+          </div>
+
+          <!-- Search Bar -->
+          <div class="space-y-2">
+            <label for="search-input" class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Cari Sepatu</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-500">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </span>
+              <input type="text" id="search-input" oninput="applyFilters()" class="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 focus:border-emerald-500 rounded-xl text-slate-800 outline-none text-xs" placeholder="Ketik nama sepatu...">
+            </div>
+          </div>
+
+          <!-- Category Selector -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Kategori</label>
+            <select id="category-filter" onchange="applyFilters()" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 focus:border-emerald-500 rounded-xl text-slate-800 outline-none text-xs cursor-pointer">
+              <option value="All">Semua Kategori</option>
+              <option value="Sport">Sport / Olahraga</option>
+              <option value="Casual">Casual / Santai</option>
+              <option value="Formal">Formal / Resmi</option>
+            </select>
+          </div>
+
+          <!-- Brand Selector -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Merek (Brand)</label>
+            <select id="brand-filter" onchange="applyFilters()" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 focus:border-emerald-500 rounded-xl text-slate-800 outline-none text-xs cursor-pointer">
+              <option value="All">Semua Brand</option>
+              <!-- Diisi dinamis -->
+            </select>
+          </div>
+
+          <!-- Sort Selector -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider">Urutkan Harga</label>
+            <select id="sort-filter" onchange="applyFilters()" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 focus:border-emerald-500 rounded-xl text-slate-800 outline-none text-xs cursor-pointer">
+              <option value="Default">Bawaan</option>
+              <option value="LowToHigh">Harga: Terendah ke Tertinggi</option>
+              <option value="HighToLow">Harga: Tertinggi ke Terendah</option>
+            </select>
+          </div>
+
+          <!-- Price Range Slider -->
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <label class="font-bold text-slate-400 uppercase tracking-wider">Maksimal Harga</label>
+              <span id="price-val" class="font-bold text-emerald-650">Rp 5.000.000+</span>
+            </div>
+            <input type="range" id="price-filter" min="1000000" max="5000000" step="100000" value="5000000" oninput="updatePriceLabel(this.value); applyFilters();" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-550">
+          </div>
+        </div>
+      </aside>
+
+      <!-- Products Grid & Listing Section -->
+      <section class="lg:col-span-3 space-y-6">
+        <!-- Results Counter & Layout Switcher -->
+        <div class="flex justify-between items-center bg-emerald-50/20 border border-slate-100 rounded-2xl px-6 py-4">
+          <span id="results-count" class="text-xs font-bold text-slate-550">Menampilkan 0 hasil</span>
+          <span class="text-xs text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-lg font-semibold">🌿 Terkoneksi LocalStorage</span>
+        </div>
+
+        <!-- Shoe Grid -->
+        <div id="products-catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          <!-- Dynmaically loaded items -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-150 text-slate-650 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        <div class="space-y-4">
+          <a href="index.html" class="flex items-center gap-2 group">
+            <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform duration-300">
+              <svg class="w-6 h-6 transform -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+            </div>
+            <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">Sole<span class="text-emerald-600">Sphere</span></span>
+          </a>
+          <p class="text-sm text-slate-500">SoleSphere adalah destinasi utama belanja sepatu premium original. Kami menyediakan sepatu terbaik dengan kualitas layanan nomor satu.</p>
+        </div>
+        
+        <div>
+          <h5 class="text-slate-800 font-bold text-sm uppercase tracking-wider mb-4">Navigasi</h5>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="hover:text-emerald-700 transition-colors">Beranda</a></li>
+            <li><a href="products.html" class="hover:text-emerald-700 transition-colors">Katalog Sepatu</a></li>
+            <li><a href="cart.html" class="hover:text-emerald-700 transition-colors">Keranjang Belanja</a></li>
+            <li><a href="login.html" class="hover:text-emerald-700 transition-colors">Login Akun</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="text-slate-800 font-bold text-sm uppercase tracking-wider mb-4">Kategori</h5>
+          <ul class="space-y-2 text-sm">
+            <li><a href="products.html?category=Sport" class="hover:text-emerald-700 transition-colors">Sepatu Olahraga</a></li>
+            <li><a href="products.html?category=Casual" class="hover:text-emerald-700 transition-colors">Sepatu Kasual</a></li>
+            <li><a href="products.html?category=Formal" class="hover:text-emerald-700 transition-colors">Sepatu Formal / Kerja</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="text-slate-800 font-bold text-sm uppercase tracking-wider mb-4">Kontak Info</h5>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>📍 Jl. Senopati Raya No. 45, Jakarta Selatan</li>
+            <li>📞 +62 821-3456-7890</li>
+            <li>✉️ support@solesphere.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-slate-100 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <p>&copy; 2026 SoleSphere. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products-data.js"></script>
+  <script src="js/main.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setupBrandFilterOptions();
+      checkUrlParams();
+      applyFilters();
+    });
+
+    function checkUrlParams() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const categoryParam = urlParams.get('category');
+      if (categoryParam) {
+        const catSelect = document.getElementById('category-filter');
+        if (catSelect) {
+          catSelect.value = categoryParam;
+        }
+      }
+    }
+
+    function setupBrandFilterOptions() {
+      const products = getProducts();
+      const brandFilter = document.getElementById('brand-filter');
+      if (!brandFilter) return;
+
+      const brands = [...new Set(products.map(p => p.brand))];
+      
+      brands.forEach(brand => {
+        const option = document.createElement('option');
+        option.value = brand;
+        option.textContent = brand;
+        brandFilter.appendChild(option);
+      });
+    }
+
+    function updatePriceLabel(val) {
+      const priceVal = document.getElementById('price-val');
+      if (priceVal) {
+        if (val == 5000000) {
+          priceVal.textContent = "Rp 5.000.000+";
+        } else {
+          priceVal.textContent = formatRupiah(val);
+        }
+      }
+    }
+
+    function resetFilters() {
+      document.getElementById('search-input').value = '';
+      document.getElementById('category-filter').value = 'All';
+      document.getElementById('brand-filter').value = 'All';
+      document.getElementById('sort-filter').value = 'Default';
+      
+      const priceSlider = document.getElementById('price-filter');
+      if (priceSlider) {
+        priceSlider.value = 5000000;
+        updatePriceLabel(5000000);
+      }
+      
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const products = getProducts();
+      const grid = document.getElementById('products-catalog-grid');
+      if (!grid) return;
+
+      const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+      const categoryVal = document.getElementById('category-filter').value;
+      const brandVal = document.getElementById('brand-filter').value;
+      const sortVal = document.getElementById('sort-filter').value;
+      const priceVal = parseInt(document.getElementById('price-filter').value);
+
+      let filteredProducts = products.filter(product => {
+        const matchesSearch = product.name.toLowerCase().includes(searchVal) || product.brand.toLowerCase().includes(searchVal);
+        const matchesCategory = categoryVal === 'All' || product.category === categoryVal;
+        const matchesBrand = brandVal === 'All' || product.brand === brandVal;
+        const matchesPrice = priceVal === 5000000 ? true : product.price <= priceVal;
+
+        return matchesSearch && matchesCategory && matchesBrand && matchesPrice;
+      });
+
+      if (sortVal === 'LowToHigh') {
+        filteredProducts.sort((a, b) => a.price - b.price);
+      } else if (sortVal === 'HighToLow') {
+        filteredProducts.sort((a, b) => b.price - a.price);
+      }
+
+      document.getElementById('results-count').textContent = `Menampilkan ${filteredProducts.length} hasil`;
+
+      if (filteredProducts.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full flex flex-col items-center justify-center py-12 text-slate-400 text-center">
+            <svg class="w-16 h-16 text-slate-350 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <h4 class="font-bold text-slate-800 text-base">Produk Tidak Ditemukan</h4>
+            <p class="text-xs text-slate-500 mt-1">Coba gunakan kata kunci atau ubah pengaturan filter Anda.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let gridHtml = '';
+      filteredProducts.forEach(product => {
+        gridHtml += `
+          <div class="group bg-white border border-slate-100 rounded-3xl p-4 shadow-premium shadow-premium-hover flex flex-col justify-between animate-fade-in">
+            <div>
+              <div class="relative overflow-hidden rounded-2xl aspect-square mb-4">
+                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                <span class="absolute top-3 left-3 text-[10px] font-bold px-2 py-1 rounded bg-emerald-600/90 text-white uppercase tracking-wider shadow-md">${product.category}</span>
+                
+                ${product.stock === 0 ? `
+                <div class="absolute inset-0 bg-slate-900/60 flex items-center justify-center">
+                  <span class="px-4 py-2 bg-rose-600 text-white text-xs font-bold rounded-lg tracking-wider uppercase">Habis</span>
+                </div>
+                ` : ''}
+              </div>
+              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">${product.brand}</span>
+              <h3 class="text-base md:text-lg font-bold text-slate-800 mt-0.5 truncate group-hover:text-emerald-600 transition-colors">
+                <a href="detail.html?id=${product.id}">${product.name}</a>
+              </h3>
+            </div>
+            
+            <div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+              <span class="font-extrabold text-emerald-655 text-sm md:text-base">${formatRupiah(product.price)}</span>
+              <a href="detail.html?id=${product.id}" class="text-xs font-bold text-slate-850 bg-slate-50 hover:bg-emerald-600 hover:text-white px-4 py-2.5 rounded-xl transition-all">
+                Detail
+              </a>
+            </div>
+          </div>
+        `;
+      });
+
+      grid.innerHTML = gridHtml;
+    }
+  </script>
+</body>
+</html>

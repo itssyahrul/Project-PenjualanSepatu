@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoleSphere - Toko Sepatu Premium & Olahraga Terbaik</title>
+  <meta name="description" content="Temukan koleksi sepatu premium terbaik dari Nike, Adidas, Jordan, Puma, dan New Balance di SoleSphere. Dapatkan kenyamanan dan gaya maksimal dengan harga terbaik.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-stone-50 bg-grid-pattern text-slate-800 min-h-screen flex flex-col justify-between">
+
+  <!-- Navbar -->
+  <nav class="sticky top-0 z-40 w-full glass-nav border-b border-slate-100 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-2 group shrink-0">
+          <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform duration-300">
+            <svg class="w-6 h-6 transform -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+          </div>
+          <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">Sole<span class="text-emerald-600">Sphere</span></span>
+        </a>
+
+        <!-- Desktop Navigation Menu -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="index.html" class="text-sm font-bold text-emerald-600 transition-colors">Beranda</a>
+          <a href="products.html" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Katalog Sepatu</a>
+          <a href="products.html?category=Sport" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Sport</a>
+          <a href="products.html?category=Casual" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Casual</a>
+          <a href="products.html?category=Formal" class="text-sm font-semibold text-slate-600 hover:text-emerald-700 transition-colors">Formal</a>
+        </div>
+
+        <!-- Right Menu (Cart & Auth) -->
+        <div class="flex items-center gap-4">
+          <!-- Cart Icon -->
+          <a href="cart.html" class="relative p-2.5 bg-white border border-slate-200 hover:border-slate-350 text-slate-700 hover:text-emerald-600 rounded-xl transition-all shadow-sm" aria-label="Keranjang Belanja">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <!-- Badge -->
+            <span id="cart-badge" class="absolute -top-1.5 -right-1.5 bg-emerald-600 text-white font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden">0</span>
+          </a>
+
+          <!-- User Nav Section (Login status) -->
+          <div id="user-nav-section" class="flex items-center gap-3 border-l border-slate-200 pl-4">
+            <!-- Dynamic elements from main.js will be loaded here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="relative overflow-hidden pt-12 pb-20 md:py-32">
+    <!-- Light glowing shapes -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-600/5 rounded-full blur-3xl -z-10"></div>
+    <div class="absolute top-1/2 right-1/4 w-96 h-96 bg-green-600/5 rounded-full blur-3xl -z-10"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Text content -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left animate-fade-in-up">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 uppercase tracking-wider">
+            🌿 Nuansa Segar & Koleksi Terkini
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight">
+            Langkah Segar Dengan Gaya <span class="bg-gradient-to-r from-emerald-600 to-green-700 bg-clip-text text-transparent">Foliage Premium</span>
+          </h1>
+          <p class="text-base sm:text-lg text-slate-650 max-w-xl mx-auto lg:mx-0">
+            Dapatkan sepatu original dengan kenyamanan maksimal yang menyegarkan hari Anda. Jelajahi berbagai kategori pilihan untuk olahraga, santai, dan acara formal Anda.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
+            <a href="products.html" class="px-8 py-4 font-bold text-white bg-emerald-600 hover:bg-emerald-700 active:scale-95 rounded-2xl transition-all shadow-xl shadow-emerald-600/20 text-center">
+              Jelajahi Produk
+            </a>
+            <a href="products.html?category=Sport" class="px-8 py-4 font-bold text-slate-700 hover:text-emerald-700 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-350 rounded-2xl active:scale-95 transition-all text-center">
+              Sepatu Olahraga
+            </a>
+          </div>
+        </div>
+
+        <!-- Featured Big Image / Showcase Card -->
+        <div class="lg:col-span-5 relative w-full flex justify-center animate-fade-in">
+          <!-- Card Backdrop Glowing -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-emerald-500/10 to-green-500/10 rounded-[2.5rem] blur-2xl transform rotate-3"></div>
+          
+          <div class="relative w-full max-w-md bg-white border border-slate-100 rounded-[2rem] p-6 shadow-2xl transform hover:-rotate-1 transition-all duration-500">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80" alt="Nike Air Max Hero" class="w-full h-64 object-cover rounded-2xl transform hover:scale-105 transition-transform duration-300">
+            <div class="mt-6 flex justify-between items-end">
+              <div>
+                <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Nike Sport</span>
+                <h3 class="text-xl font-bold text-slate-900 mt-1">Nike Air Max 270</h3>
+                <p class="text-sm font-semibold text-slate-500 mt-0.5">Rp 2.199.000</p>
+              </div>
+              <a href="detail.html?id=p1" class="w-12 h-12 bg-emerald-50 text-emerald-700 rounded-xl flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-colors shadow-lg">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Categories Section -->
+  <section class="py-16 border-t border-slate-100 bg-white/50 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-xl mx-auto mb-12">
+        <h2 class="text-3xl font-extrabold text-slate-900">Kategori Pilihan</h2>
+        <p class="text-slate-650 text-sm mt-2">Temukan tipe sepatu yang sesuai dengan gaya hidup dan aktivitas Anda.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Sport -->
+        <a href="products.html?category=Sport" class="group relative h-64 rounded-3xl overflow-hidden border border-slate-100 shadow-premium flex items-end p-6">
+          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop&q=80');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"></div>
+          <div class="relative z-10 space-y-1">
+            <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">Sport Shoes</h3>
+            <p class="text-xs text-slate-300">Dukungan performa tinggi untuk latihan & lari.</p>
+          </div>
+        </a>
+
+        <!-- Casual -->
+        <a href="products.html?category=Casual" class="group relative h-64 rounded-3xl overflow-hidden border border-slate-100 shadow-premium flex items-end p-6">
+          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop&q=80');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"></div>
+          <div class="relative z-10 space-y-1">
+            <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">Casual Sneakers</h3>
+            <p class="text-xs text-slate-300">Gaya trendi untuk hangout dan bersantai harian.</p>
+          </div>
+        </a>
+
+        <!-- Formal -->
+        <a href="products.html?category=Formal" class="group relative h-64 rounded-3xl overflow-hidden border border-slate-100 shadow-premium flex items-end p-6">
+          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&auto=format&fit=crop&q=80');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"></div>
+          <div class="relative z-10 space-y-1">
+            <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">Formal Leather</h3>
+            <p class="text-xs text-slate-300">Desain elegan untuk kerja kantor & acara resmi.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="py-20 border-t border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-12">
+        <div>
+          <h2 class="text-3xl font-extrabold text-slate-900 text-center sm:text-left">Produk Unggulan</h2>
+          <p class="text-slate-600 text-sm mt-2 text-center sm:text-left">Rekomendasi sepatu terlaris pilihan SoleSphere minggu ini.</p>
+        </div>
+        <a href="products.html" class="flex items-center gap-1 text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">
+          Lihat Semua Produk
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </a>
+      </div>
+
+      <!-- Grid Produk -->
+      <div id="featured-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+    </div>
+  </section>
+
+  <!-- Features Trust Section -->
+  <section class="py-16 bg-emerald-50/20 border-y border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="flex gap-4 items-start">
+          <div class="w-12 h-12 bg-emerald-50 border border-emerald-250 text-emerald-650 rounded-2xl flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-800 text-base">Jaminan Original 100%</h4>
+            <p class="text-sm text-slate-600 mt-1">Seluruh sepatu yang dipasarkan dijamin asli langsung dari distributor resmi brand.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 items-start">
+          <div class="w-12 h-12 bg-emerald-50 border border-emerald-250 text-emerald-650 rounded-2xl flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-800 text-base">Gratis Ongkir Premium</h4>
+            <p class="text-sm text-slate-600 mt-1">Nikmati gratis pengiriman ke seluruh wilayah Indonesia untuk pembelanjaan di atas Rp 3.000.000.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 items-start">
+          <div class="w-12 h-12 bg-emerald-50 border border-emerald-250 text-emerald-650 rounded-2xl flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18.5"></path></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-800 text-base">Garansi Ukuran Tukar</h4>
+            <p class="text-sm text-slate-600 mt-1">Ukuran sepatu kurang pas? Lakukan penukaran ukuran dalam waktu 7 hari setelah barang diterima.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-150 text-slate-600 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        <div class="space-y-4">
+          <a href="index.html" class="flex items-center gap-2 group">
+            <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform duration-300">
+              <svg class="w-6 h-6 transform -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+            </div>
+            <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">Sole<span class="text-emerald-600">Sphere</span></span>
+          </a>
+          <p class="text-sm text-slate-500">SoleSphere adalah destinasi utama belanja sepatu premium original. Kami menyediakan sepatu terbaik dengan kualitas layanan nomor satu.</p>
+        </div>
+        
+        <div>
+          <h5 class="text-slate-800 font-bold text-sm uppercase tracking-wider mb-4">Navigasi</h5>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="hover:text-emerald-700 transition-colors">Beranda</a></li>
+            <li><a href="products.html" class="hover:text-emerald-700 transition-colors">Katalog Sepatu</a></li>
+            <li><a href="cart.html" class="hover:text-emerald-700 transition-colors">Keranjang Belanja</a></li>
+            <li><a href="login.html" class="hover:text-emerald-700 transition-colors">Login Akun</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="text-slate-800 font-bold text-sm uppercase tracking-wider mb-4">Kategori</h5>
+          <ul class="space-y-2 text-sm">
+            <li><a href="products.html?category=Sport" class="hover:text-emerald-700 transition-colors">Sepatu Olahraga</a></li>
+            <li><a href="products.html?category=Casual" class="hover:text-emerald-700 transition-colors">Sepatu Kasual</a></li>
+            <li><a href="products.html?category=Formal" class="hover:text-emerald-700 transition-colors">Sepatu Formal / Kerja</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="text-slate-800 font-bold text-sm uppercase tracking-wider mb-4">Kontak Info</h5>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>📍 Jl. Senopati Raya No. 45, Jakarta Selatan</li>
+            <li>📞 +62 821-3456-7890</li>
+            <li>✉️ support@solesphere.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-slate-100 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <p>&copy; 2026 SoleSphere. All rights reserved. Hubungi CS untuk info lanjut.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products-data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderFeaturedProducts();
+    });
+
+    function renderFeaturedProducts() {
+      const products = getProducts();
+      const featuredGrid = document.getElementById('featured-products-grid');
+      if (!featuredGrid) return;
+
+      const featuredList = products.slice(0, 4);
+
+      if (featuredList.length === 0) {
+        featuredGrid.innerHTML = `<p class="col-span-full text-center text-slate-500">Belum ada produk.</p>`;
+        return;
+      }
+
+      let html = '';
+      featuredList.forEach(product => {
+        html += `
+          <div class="group relative bg-white border border-slate-100 rounded-2xl p-4 shadow-premium shadow-premium-hover flex flex-col justify-between">
+            <div>
+              <div class="relative overflow-hidden rounded-xl aspect-square mb-4">
+                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                <span class="absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-600/95 text-white uppercase tracking-wide shadow">${product.category}</span>
+              </div>
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">${product.brand}</span>
+              <h3 class="text-base font-bold text-slate-900 mt-0.5 truncate group-hover:text-emerald-600 transition-colors">
+                <a href="detail.html?id=${product.id}">${product.name}</a>
+              </h3>
+            </div>
+            
+            <div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+              <span class="font-extrabold text-emerald-600 text-sm md:text-base">${formatRupiah(product.price)}</span>
+              <a href="detail.html?id=${product.id}" class="text-xs font-bold text-slate-800 bg-slate-100 hover:bg-emerald-600 hover:text-white px-3.5 py-2 rounded-xl transition-all">
+                Lihat Detail
+              </a>
+            </div>
+          </div>
+        `;
+      });
+      featuredGrid.innerHTML = html;
+    }
+  </script>
+</body>
+</html>
